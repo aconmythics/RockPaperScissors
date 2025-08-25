@@ -18,23 +18,65 @@ function getCompChoice() {
 function playRound() {
     const choice = prompt("Choose: Rock Paper Scissors")
     const compChoice = getCompChoice()
-    if choice.toLowerCase == "rock" {
-
+    if ((choice.toLowerCase()) == "rock") {
+        if (compChoice == "rock") {
+           return "draw";
+        }
+        else if (compChoice == "paper") {
+            return "lose";
+        }
+        else if (compChoice == "scissors") {
+            return "win";
+        }
     }
-    else if choice.toLowerCase == "paper"{
-
+    else if ((choice.toLowerCase()) == "paper") {
+        if (compChoice == "rock") {
+           return "win";
+        }
+        else if (compChoice == "paper") {
+            return "draw";
+        }
+        else if (compChoice == "scissors") {
+            return "lose";
+        }
     }
-    else if choice.toLowerCase == "scissors"{
-
+    else if ((choice.toLowerCase()) == "scissors") {
+        if (compChoice == "rock") {
+           return "lose";
+        }
+        else if (compChoice == "paper") {
+            return "win";
+        }
+        else if (compChoice == "scissors") {
+            return "draw";
+        }
     }
     else {
         console.log("That is not a valid option, you lose this round")
-    }
-    
+        return "lose";
+    }  
 }
 
 function playGame() {
-    playRound()
+    let win = 0;
+    let draw = 0;
+    let lose = 0;
+    let result = "";
+    for (let i = 1; i <= 5; i++) {
+        result = playRound();
+        console.log(result);
+        console.log(i);
+        if (result == "win") {
+            win ++;
+        }
+        else if (result == "draw") {
+            draw ++;
+        }
+        else if (result == "lose") {
+            lose ++;
+        }
+    }
+    console.log(`You have won ${win} times, drawn ${draw} times and lost ${lose} times`);
 }
 
 playGame()
