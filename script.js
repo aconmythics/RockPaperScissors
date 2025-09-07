@@ -1,8 +1,6 @@
-// rock paper scissors: play 5 rounds, user inputs guess, computer randomly chooses from the options, displays winner of round and after 5 rounds who won the game
-// function for playing round, function for playing game
 
 function getCompChoice() {
-    let compChoice = Math.random()
+    compChoice = Math.random()
     if (compChoice <= 0.33) {
         compChoice = "rock";
     }
@@ -15,8 +13,7 @@ function getCompChoice() {
     return compChoice;
 }
 
-function playRound() {
-    const choice = prompt("Choose: Rock Paper Scissors")
+function playRound(choice) {
     const compChoice = getCompChoice()
     if ((choice.toLowerCase()) == "rock") {
         if (compChoice == "rock") {
@@ -51,32 +48,63 @@ function playRound() {
             return "draw";
         }
     }
-    else {
-        console.log("That is not a valid option, you lose this round")
-        return "lose";
-    }  
 }
 
-function playGame() {
-    let win = 0;
-    let draw = 0;
-    let lose = 0;
-    let result = "";
-    for (let i = 1; i <= 5; i++) {
-        result = playRound();
-        console.log(result);
-        console.log(i);
-        if (result == "win") {
-            win ++;
-        }
-        else if (result == "draw") {
-            draw ++;
-        }
-        else if (result == "lose") {
-            lose ++;
-        }
+function playGame(choice, buttons) {
+    result = playRound(choice);
+    const scores = document.querySelector(".scores")
+    if (result == "win") {
+        win ++;
     }
-    console.log(`You have won ${win} times, drawn ${draw} times and lost ${lose} times`);
+    else if (result == "draw") {
+        draw ++;
+    }
+    else if (result == "lose") {
+        lose ++;
+    }
+    counter++
+    if (win == 5) {
+        scores.textContent = `Congratulations, you won!!! Wins:${win}   losses:${lose}  draws:${draw}`
+        buttons.textContent = "";
+    }
+    else if (lose == 5) {
+        scores.textContent = `Condolonces, you lost :( Wins:${win}   losses:${lose}  draws:${draw}`
+        buttons.textContent = "";
+    }
+    else {
+        scores.textContent = `Wins:${win}   losses:${lose}  draws:${draw}`;
+    };
 }
 
-playGame()
+function initGame() {
+    win = 0;
+    draw = 0;
+    lose = 0;
+    counter = 0;
+    const scores = document.querySelector(".scores")
+    scores.textContent = `Wins:${win}   losses:${lose}  draws:${draw}`
+    btnStart.textContent = "Reset"
+    const btnRock = document.createElement("button")
+    btnRock.textContent = "Rock"
+    const btnPaper = document.createElement("button")
+    btnPaper.textContent = "Paper"
+    const btnScissors = document.createElement("button")
+    btnScissors.textContent = "Scissors"
+    const buttons = document.querySelector(".buttons")
+    btnRock.addEventListener("click", () => playGame("rock", buttons))
+    btnPaper.addEventListener("click", () => playGame("paper", buttons))
+    btnScissors.addEventListener("click", () => playGame("scissors", buttons))
+     if (buttons.childElementCount != 3) {
+        buttons.appendChild(btnRock)
+        buttons.appendChild(btnPaper)
+        buttons.appendChild(btnScissors)
+        }
+    };
+
+let win = 0;
+let draw = 0;
+let lose = 0;
+let counter = 0;
+
+const btnStart = document.querySelector("#init")
+btnStart.addEventListener("click", initGame)
